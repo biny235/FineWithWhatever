@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "finewithwhatever",
+    "name": "fww",
     "description": "This project is really great.",
-    "slug": "finewithwhatever",
+    "slug": "fww",
     "privacy": "public",
     "sdkVersion": "27.0.0",
     "platforms": ["ios", "android"],
