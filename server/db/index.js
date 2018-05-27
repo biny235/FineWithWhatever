@@ -28,7 +28,7 @@ const syncAndSeed = ()=>{
     })
 }
 
-User.belongsToMany(User, { as: 'friend', through: 'friends' })
+User.belongsToMany(User, { as: 'friend', through: 'friends' });
 
 
 
