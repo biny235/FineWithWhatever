@@ -27,9 +27,9 @@ const syncAndSeed = ()=>{
 
 Place.belongsTo(Plan);
 Plan.hasMany(Place);
-Group.hasMany(User);
 User.belongsToMany(User, { as: 'friend', through: 'friends' });
-User.belongsToMany(Group, {through: 'groups'});
+User.belongsToMany(Group, { as: 'member', through: 'groupmembers' });
+Group.belongsToMany(User, { as: 'group', through: 'groupmembers'})
 
 module.exports = {
   syncAndSeed,
