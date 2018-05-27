@@ -1,0 +1,3 @@
+# FineWithWhatever
+
+NPM INSTALL
