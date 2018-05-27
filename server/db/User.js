@@ -14,6 +14,6 @@ const User = conn.define('user', {
   email:{
     type: Sequelize.STRING
   }
-})
+});
 
 module.exports = User;
