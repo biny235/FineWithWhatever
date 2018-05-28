@@ -1,10 +1,13 @@
 const router = require('express').Router();
-const config = require('../../../config');
-
 const { User } = require('../../db').models;
 
-
-Object.assign(process.env, config);
+try{
+  const config = require('../../../config');
+  Object.assign(process.env, config);
+}
+catch{
+  console.log("you may be missing config variable")
+}
 
 
 const passport = require('passport');
