@@ -16,7 +16,7 @@ router.use((req, res, next) => {
     .catch(() => next({ status: 401 }));
 });
 
-//router.use('/google', require('./google'));
+router.use('/google', require('./google'));
 router.use('/sessions', require('./sessions'));
 
 module.exports = router;
