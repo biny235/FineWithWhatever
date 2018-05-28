@@ -2,7 +2,8 @@ const router = require('express').Router();
 const db = require('../../db');
 const { User } = db.models;
 
-router.post('/', (req, res, next) => {
+//User auth routes
+router.post('/login', (req, res, next) => {
   User.authenticate(req.body)
     .then(token => res.send(token))
     .catch(next);
