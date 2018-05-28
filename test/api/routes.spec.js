@@ -5,7 +5,6 @@ const { expect } = require('chai');
 const db = require('../../server/db');
 const { User } = db.models;
 
-let userMap;
 //Root route
 describe('Loading express', ()=> {
   it('It responds to /', (done)=> {
@@ -22,7 +21,7 @@ describe('Loading express', ()=> {
 
 //User routes test, needs to be logged in as admin.
 describe('User routes for Login', () => {
-  // let userMap;
+  let userMap;
   beforeEach(() => {
     return db.syncAndSeed()
     .then(()=> {
@@ -30,13 +29,12 @@ describe('User routes for Login', () => {
         memo[user.username] = user;
         return memo;
       },{});
+      console.log(userMap);
       return userMap;
     });
   });
 
   describe('POST /auth/sessions', ()=> {
-
-    console.log(userMap);
     it('returns token with correct credentials', ()=> {
       const token = jwt.encode({ id: userMap.moe.id}, KEY);
       return app.post('/auth/sessions')
@@ -47,25 +45,12 @@ describe('User routes for Login', () => {
         });
     });
     it('returns 401 with incorrect credentials', ()=> {
-      return app.post('/api/sessions')
+      return app.post('/auth/sessions')
         .send({ username: userMap.moe.username, password: 'nope'})
         .expect(401)
     });
   });
 });
-
-
-
-// //User routes test, login authentication.
-// describe('User routes for Login', () => {
-//   let userMap;
-//   beforeEach(() => {
-//     return utils()
-//     .then( (users)=> {
-//       userMap = users;
-//     });
-//   });
-
 
 //   describe('GET /api/sessions/:token', ()=> {
 //     it('returns user with a valid token with a valid user', ()=> {
