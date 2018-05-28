@@ -5,7 +5,7 @@ try{
   const config = require('../../../config');
   Object.assign(process.env, config);
 }
-catch{
+catch(err){
   console.log("you may be missing config variable")
 }
 
