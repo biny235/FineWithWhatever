@@ -6,9 +6,9 @@ const { User } = db.models;
 db.syncAndSeed()
 
 app.get('/', (req, res, next)=>{
-
   res.send("HELLO")
-
 })
+
+app.use('/', require('./routes'))
 
 module.exports = app;
