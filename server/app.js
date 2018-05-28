@@ -25,20 +25,3 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
-
-
-
-
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-module.exports = app;
-=======
->>>>>>> a1fcf0264dc613fbe0e215d5a187872e9b33ae74
