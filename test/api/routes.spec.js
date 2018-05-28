@@ -1,22 +1,23 @@
-// const app = require('supertest')(require('../../server/app.js'));
-// const utils = require('../utils');
-// const db = require('../../server/db');
-// const jwt = require('jwt-simple');
-// const KEY = process.env.JWT_KEY;
-// const { expect } = require('chai');
-// //Root route
-// describe('Loading express', ()=> {
-//   it('It responds to /', (done)=> {
-//   app
-//     .get('/')
-//     .expect(200, done);
-//   });
-//   it('Sends 404 for everything else', (done)=> {
-//     app
-//       .get('/foo/bar')
-//       .expect(404, done);
-//   });
-// });
+ const app = require('supertest')(require('../../server/app.js'));
+const utils = require('../utils');
+const db = require('../../server/db');
+const jwt = require('jwt-simple');
+const KEY = process.env.JWT_KEY;
+const { expect } = require('chai');
+
+//Root route
+describe('Loading express', ()=> {
+  it('It responds to /', (done)=> {
+  app
+    .get('/')
+    .expect(200, done);
+  });
+  it('Sends 404 for everything else', (done)=> {
+    app
+      .get('/foo/bar')
+      .expect(404, done);
+  });
+});
 
 // //User routes test, login authentication.
 // describe('User routes for Login', () => {
