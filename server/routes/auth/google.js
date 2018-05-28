@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const config = require('../../../config');
 
-const { User } = require('../../db').models
+const { User } = require('../../db').models;
 
 
-Object.assign(process.env, config)
+Object.assign(process.env, config);
 
 
 const passport = require('passport');
@@ -18,30 +18,30 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    const attr = { googleId: profile.id }
+    const attr = { googleId: profile.id };
     User.findOne({ where: attr })
       .then(user => {
         if(user){
-          return user
+          return user;
         }
-        const { displayName, emails } = profile
+        const { displayName, emails } = profile;
         return User.create(Object.assign(attr, {username: displayName, email: emails[0].value }))
       })
       .then(user => done(null, user))
-      .catch(err => done(err))
+      .catch(err => done(err));
 
 }
 ));
 
-router.user
+router.user;
 
 router.get('/',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }));
 
-router.get('/callback', 
+router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: false}),
   function(req, res) {
     res.redirect('/');
 });
 
-module.exports = router
+module.exports = router;
