@@ -10,9 +10,9 @@ const syncAndSeed = ()=>{
   return conn.sync({ force: true })
     .then(()=>{
       return Promise.all([
-        User.create({username: 'test'}),
-        User.create({username: 'test'}),
-        User.create({username: 'test'}),
+        User.create({username: 'Moe', password: 'MOE'}),
+        User.create({username: 'Larry', password: 'LARRY'}),
+        User.create({username: 'Curly', password: 'CURLY'}),
         User.create({username: 'test'}),
         User.create({username: 'test'})
       ])
