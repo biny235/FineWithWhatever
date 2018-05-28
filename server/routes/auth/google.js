@@ -1,16 +1,17 @@
-const config = require('../config');
+const router = require('express').Router();
+const config = require('../../../config');
+
+const { User } = require('../../db').models
+
 
 Object.assign(process.env, config)
 
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-app.use(passport.initialize());
 
-// Use the GoogleStrategy within Passport.
-//   Strategies in passport require a `verify` function, which accept
-//   credentials (in this case, a token, tokenSecret, and Google profile), and
-//   invoke a callback with a user object.
+router.use(passport.initialize());
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CONSUMER_KEY,
     clientSecret: process.env.GOOGLE_CONSUMER_SECRET,
@@ -31,17 +32,16 @@ passport.use(new GoogleStrategy({
 
 }
 ));
-app.user
-app.get('/auth/google',
+
+router.user
+
+router.get('/',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }));
 
-// GET /auth/google/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-app.get('/auth/google/callback', 
+router.get('/callback', 
   passport.authenticate('google', { failureRedirect: '/login', session: false}),
   function(req, res) {
     res.redirect('/');
 });
+
+module.exports = router
