@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const db = require('./db');
-const { User } = db.models;
+//const { User } = db.models;
 
 db.syncAndSeed()
 
