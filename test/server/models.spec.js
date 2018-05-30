@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const db = require('../../server/db');
-const { User, Group, Plan, Place } = db.models;
+const { User, Favorite , Plan, Place } = db.models;
 
 // Models tests
 describe('models', () => {
@@ -9,9 +9,9 @@ describe('models', () => {
       expect(User).to.be.ok;
     });
   });
-  describe('Group', () => {
+  describe('Favorite', () => {
     it('model Group exists.', () => {
-      expect(Group).to.be.ok;
+      expect(Favorite).to.be.ok;
     });
   });
   describe('Plan', () => {
