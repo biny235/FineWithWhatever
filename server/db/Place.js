@@ -6,6 +6,12 @@ const Place = conn.define('place', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  location: {
+    type: Sequelize.STRING
+  },
+  details: {
+    type: Sequelize.TEXT
+  }
 });
 
 module.exports = Place;
