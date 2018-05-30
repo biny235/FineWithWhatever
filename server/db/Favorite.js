@@ -1,11 +1,11 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
 
-const Group = conn.define('group', {
+const Favorite = conn.define('favorite', {
   name: {
     type: Sequelize.STRING,
-    defaultValue: 'Group'
+    allowNull: false
   }
 });
 
-module.exports = Group;
+module.exports = Favorite;

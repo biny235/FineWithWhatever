@@ -2,7 +2,7 @@ const conn = require('./conn');
 const User = require('./User');
 const Place = require('./Place');
 const Plan = require('./Plan');
-const Group = require('./Group');
+const Favorite = require('./Favorite');
 
 
 
@@ -25,17 +25,20 @@ const syncAndSeed = ()=>{
     });
 };
 
-Place.belongsTo(Plan);
-Plan.hasMany(Place);
 User.belongsToMany(User, { as: 'friend', through: 'friends' });
-User.belongsToMany(Group, { as: 'member', through: 'groupmembers' });
-Group.belongsToMany(User, { as: 'group', through: 'groupmembers'})
+Plan.belongsTo(User);
+User.hasMany(Plan);
+Place.belongsToMany(Plan, { through: 'PlacePlan' });
+Plan.belongsToMany(Place, { through: 'PlacePlan' });
+Favorite.belongsTo(User);
+Favorite.belongsTo(Place);
+User.hasMany(Favorite);
 
 module.exports = {
   syncAndSeed,
   models:{
     User,
-    Group,
+    Favorite,
     Plan,
     Place
   }
