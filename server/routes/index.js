@@ -1,6 +1,22 @@
 const router = require('express').Router();
+const db = require('../db');
+const { User } = db.models;
 
-router.use('/api', require('./api'))
-router.use('/auth', require('./auth'))
+router.use((req, res, next) => {
+  const token = req.headers.authorization;
 
-module.exports = router
+  if(!token) {
+    return next();
+  }
+  User.exchangeTokenForUser(token)
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(() => next({ status: 401 }));
+});
+
+router.use('/api', require('./api'));
+router.use('/auth', require('./auth'));
+
+module.exports = router;
