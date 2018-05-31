@@ -3,8 +3,7 @@ const db = require('../../db');
 const { User } = db.models;
 
 router.use((req, res, next) => {
-  const token = req.headers.authorization;
-
+  const token = req.headers.token;
   if(!token) {
     return next();
   }
@@ -17,6 +16,6 @@ router.use((req, res, next) => {
 });
 
 router.use('/google', require('./google'));
-router.use('/sessions', require('./sessions'));
+router.use('/token', require('./token'));
 
 module.exports = router;

@@ -2,9 +2,10 @@ const router = require('express').Router();
 const { User } = require('../../db').models;
 
 router.get('/', (req, res, next) => {
-  User.findAll()
-    .then(users => res.send(users))
-    .catch(next);
+  if(!req.user){
+    next({status: 401})
+  }
+  res.send(req.user)
 });
 
 router.post('/', (req, res, next) => {
