@@ -32,4 +32,6 @@ router.delete('/:id', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/plan')
+
 module.exports = router;
