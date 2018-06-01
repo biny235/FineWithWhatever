@@ -1,17 +1,8 @@
-const socket = io(window.location.origin);
+import React from 'react';
+import {render} from 'react-dom';
 
+import Main from './Main'
 
-const count = document.getElementById('count')
-socket.on('setCounter', (counter) => count.innerHTML = counter)
+const app = document.getElementById('app');
 
-count.addEventListener("click", ()=>{
-  
-  count.innerHTML = count.innerHTML * 1 + 1
-  socket.emit("add", count.innerHTML * 1)
-  
-})
-
-socket.on('connect', () => {
-  console.log('I have made a persistent two-way connection to the server!');
-});
-socket.on('disconnect', ()=> console.log("we have disconnected"))
+render(<Main />, app)

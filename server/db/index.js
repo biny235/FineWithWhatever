@@ -25,7 +25,7 @@ const syncAndSeed = ()=>{
     });
 };
 
-User.belongsToMany(User, { as: 'friend', through: 'friends' });
+User.belongsToMany(User, { as: 'friends', through: 'friend' });
 Plan.belongsTo(User);
 User.hasMany(Plan);
 Place.belongsToMany(Plan, {as: 'place', through: 'plan_places' });
