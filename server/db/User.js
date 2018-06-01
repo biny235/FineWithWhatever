@@ -13,7 +13,7 @@ const User = conn.define('user', {
     type: Sequelize.STRING
   },
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   googleId: {
     type: Sequelize.STRING
@@ -21,13 +21,21 @@ const User = conn.define('user', {
   email: {
     type: Sequelize.STRING
   }
+},
+{
+  defaultScope: 
+  {
+    attributes: { exclude: ['password'] },
+  }
 });
 
 User.authenticate = function (credentials) {
+  const { username, password } = credentials;
+  console.log(username, password)  
   return this.findOne({
     where: {
-      username: credentials.username,
-      password: credentials.password
+      username: {$iLike: username},
+      password
     }
   })
     .then(user => {
@@ -43,7 +51,7 @@ User.authenticate = function (credentials) {
 User.exchangeTokenForUser = function (token) {
   try {
     const id = jwt.decode(token, KEY).id;
-    return User.findById(id)
+    return User.findById(id, {attributes: ['id','username', 'email']})
       .then(user => {
         if (user) {
           return user;
@@ -56,5 +64,21 @@ User.exchangeTokenForUser = function (token) {
     return Promise.reject({ status: 401 });
   }
 };
+
+User.getFriends = function (id) {
+  return User.findById(id)
+    .then(user => user.getFriends({where:{id: { $ne: id }}, attributes: ['id','username', 'email']}))
+};
+
+User.findCurrentPlan = function (id) {
+  
+  return conn.models.plan.findOrCreate({
+
+    where: { status: {$ne: 'CLOSED'}, userId: id },
+    defaults: { status: 'NEW', userId: id },
+    include: [{ all: true }]
+
+  });
+}
 
 module.exports = User;
