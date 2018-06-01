@@ -28,8 +28,8 @@ const syncAndSeed = ()=>{
 User.belongsToMany(User, { as: 'friends', through: 'friend' });
 Plan.belongsTo(User);
 User.hasMany(Plan);
-Place.belongsToMany(Plan, {as: 'place', through: 'plan_places' });
-Plan.belongsToMany(Place, { through: 'plan_places' });
+Place.belongsToMany(Plan, { as: 'recommendations', through: 'plan_places' });
+Place.belongsToMany(User, {as: 'favorites', through: 'user_favorites'})
 Favorite.belongsTo(User);
 Favorite.belongsTo(Place);
 User.hasMany(Favorite);
