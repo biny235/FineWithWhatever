@@ -3,9 +3,7 @@ const db = require('../../db');
 const { User } = db.models;
 
 //User auth routes
-router.post('/login', (req, res, next) => {
-  
-  console.log(req.body)
+router.post('/', (req, res, next) => {
   User.authenticate(req.body)
     .then(token => res.send(token))
     .catch(next);

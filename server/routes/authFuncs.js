@@ -7,14 +7,15 @@ const auth = (req, res, next) => {
   }
   User.exchangeTokenForUser(token)
     .then(user => {
-      req.user = user.dataValues;
+      req.user = user;
       next();
     })
     .catch(next);
 };
 
-checkUser = (user) => {
-  if(!user) next({status: 401, errors: [{message: "unauthorized"}]})
+checkUser = (req, res, next) => {
+  if(!req.user) next({status: 401, errors: [{message: "unauthorized"}]});
+  next()
 }
 
 const isCorrectUser = (key, paramName) => {
