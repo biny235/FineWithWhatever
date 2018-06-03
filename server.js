@@ -6,7 +6,7 @@ const _server = require('http').createServer(require('./server/app'));
 
 const port = process.env.PORT || 3000;
 
-// syncAndSeed()
+syncAndSeed()
 
 const server = _server.listen( port, ()=> console.log(`Listening on port ${port}`));
 const io = socketio(server);
