@@ -2,7 +2,6 @@ const conn = require('./conn');
 const User = require('./User');
 const Place = require('./Place');
 const Plan = require('./Plan');
-const Favorite = require('./Favorite');
 
 
 
@@ -13,8 +12,7 @@ const syncAndSeed = ()=>{
         User.create({username: 'Moe', password: 'MOE'}),
         User.create({username: 'Larry', password: 'LARRY'}),
         User.create({username: 'Curly', password: 'CURLY'}),
-        User.create({username: 'test'}),
-        User.create({username: 'test'})
+        User.create({username: 'test', password: '123'}),
       ])
     })
     .then(users => {
@@ -28,17 +26,13 @@ const syncAndSeed = ()=>{
 User.belongsToMany(User, { as: 'friends', through: 'friend' });
 Plan.belongsTo(User);
 User.hasMany(Plan);
-Place.belongsToMany(Plan, { as: 'recommendations', through: 'plan_places' });
+Place.belongsToMany(Plan, { as: 'recommendation', through: 'recommendations' });
 Place.belongsToMany(User, {as: 'favorites', through: 'user_favorites'})
-Favorite.belongsTo(User);
-Favorite.belongsTo(Place);
-User.hasMany(Favorite);
 
 module.exports = {
   syncAndSeed,
   models:{
     User,
-    Favorite,
     Plan,
     Place
   }
