@@ -28,7 +28,7 @@ passport.use(new GoogleStrategy({
           return user;
         }
         const { displayName, emails } = profile;
-        return User.create(Object.assign(attr, {username: displayName, email: emails[0].value }))
+        return User.create(Object.assign(attr, { username: displayName, email: emails[0].value }))
       })
       .then(user => done(null, user))
       .catch(err => done(err));
@@ -39,13 +39,13 @@ passport.use(new GoogleStrategy({
 router.user;
 
 router.get('/',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }));
+  passport.authenticate('google', { scope: 'email' }));
 
 router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/', session: false}),
   function(req, res) {
     const token = req.user.generateToken()
-    res.send(token);
+    res.redirect(`exp://localhost:19000/?token=${token}`);
 });
 
 module.exports = router;
