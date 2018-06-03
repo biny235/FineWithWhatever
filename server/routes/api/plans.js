@@ -5,7 +5,6 @@ const { auth, checkUser } = require('../authFuncs');
 router.put('/:id', [auth, checkUser], (req, res, next) => {
   Plan.findById(req.params.id)
     .then(plan => {
-
       plan.update(req.body);
       res.send(plan);
     })

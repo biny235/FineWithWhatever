@@ -18,7 +18,7 @@ router.use(passport.initialize());
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CONSUMER_KEY,
     clientSecret: process.env.GOOGLE_CONSUMER_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: `${process.env.GOOGLE_CALLBACK}/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
     const attr = { googleId: profile.id };
