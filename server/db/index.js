@@ -6,37 +6,46 @@ const Favorite = require('./Favorite');
 
 
 
-const syncAndSeed = ()=>{
+const syncAndSeed = () => {
   return conn.sync({ force: true })
-    .then(()=>{
+    .then(() => {
       return Promise.all([
-        User.create({username: 'Moe', password: 'MOE'}),
-        User.create({username: 'Larry', password: 'LARRY'}),
-        User.create({username: 'Curly', password: 'CURLY'}),
-        User.create({username: 'test'}),
-        User.create({username: 'test'})
+        User.create({ username: 'Moe', password: 'MOE' }),
+        User.create({ username: 'Larry', password: 'LARRY' }),
+        User.create({ username: 'Curly', password: 'CURLY' }),
+        User.create({ username: 'test' }),
+        User.create({ username: 'test' })
       ])
     })
     .then(users => {
-      const id =  users[0].id;
+      const id = users[0].id;
       users.forEach(user => {
         user.addFriend(users[0]);
       });
     });
 };
 
+/* Friends */
 User.belongsToMany(User, { as: 'friends', through: 'friend' });
-Plan.belongsTo(User);
-User.hasMany(Plan);
-Place.belongsToMany(Plan, { as: 'recommendations', through: 'plan_places' });
-Place.belongsToMany(User, {as: 'favorites', through: 'user_favorites'})
-Favorite.belongsTo(User);
-Favorite.belongsTo(Place);
-User.hasMany(Favorite);
+
+/* Participants */
+User.belongsToMany(Plan, { through: 'participants' });
+Plan.belongsToMany(User, { through: 'participants' });
+
+/* Recommendations */
+Plan.belongsToMany(Place, { through: 'recommendations' });
+Place.belongsToMany(Plan, { through: 'recommendations' });
+
+// User.belongsToMany(Plan, { through: 'recommendations' });
+// User.belongsToMany(Place, { through: 'recommendations' });
+
+/* Favorites */
+User.belongsToMany(Place, { through: Favorite });
+Place.belongsToMany(User, { through: Favorite });
 
 module.exports = {
   syncAndSeed,
-  models:{
+  models: {
     User,
     Favorite,
     Plan,
