@@ -44,7 +44,7 @@ router.get('/friends', [auth, checkUser], (req, res, next)=>{
 })
 
 router.post('/friends', [auth, checkUser], (req,res,next)=>{
-  req.user.addFriend(req.body.friendId)
+  User.addFriend(req.user, req.body.friendId)
     .then(friends => res.send(friends))
     .catch(next)
 })

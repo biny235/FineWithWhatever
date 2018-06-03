@@ -81,4 +81,19 @@ User.findCurrentPlan = function (id) {
   });
 }
 
+User.addFriend = function (user, friendId){
+  let friend
+  return User.findOne({id: friendId})
+    .then(_friend => {
+      friend = _friend
+      friend.addFriend(user)
+    })
+    .then(()=> User.findOne({id: user.id}))
+    .then(user => {
+      user.addFriend(friend)
+      return user.getFriends()
+    })
+}
+
+
 module.exports = User;
