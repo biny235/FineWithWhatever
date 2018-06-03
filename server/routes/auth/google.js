@@ -1,8 +1,27 @@
 const router = require('express').Router();
 const { User } = require('../../db').models;
+const config = require('../../../config');
+const googleSecret = config.GOOGLE_PLACES_KEY;
 
+//Google AutoComplete routes.
+const googleMapsClient = require('@google/maps').createClient({
+  key: googleSecret,
+  Promise: Promise
+});
+
+router.post('/autocomplete', (req, res, next) => {
+  googleMapsClient.placesAutoComplete({ input: req.body.input }).asPromise()
+    .then(resp => resp.json.predictions)
+    .then(predictions => res.send(predictions));
+});
+router.post('/getplace', (req, res, next) => {
+  googleMapsClient.reverseGeocode({ place_id: req.body.query }).asPromise()
+    .then(resp => res.send(resp.json.results))
+    .catch(next);
+});
+
+//OAuth middleware for authentication.
 try{
-  const config = require('../../../config');
   Object.assign(process.env, config);
 }
 catch(err){
@@ -46,5 +65,7 @@ router.get('/callback',
   function(req, res) {
     res.redirect('/');
 });
+
+
 
 module.exports = router;
