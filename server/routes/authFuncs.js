@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
     .catch(next);
 };
 
-checkUser = (req, res, next) => {
+const checkUser = (req, res, next) => {
   if(!req.user) next({status: 401, errors: [{message: "unauthorized"}]});
   next()
 }

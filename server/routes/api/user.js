@@ -37,7 +37,7 @@ router.delete('/', [auth, checkUser], (req, res, next) => {
     .catch(next);
 });
 
-router.get('/friends', [auth, checkUser], (req, res, next)=>{;
+router.get('/friends', [auth, checkUser], (req, res, next)=>{
   User.getFriends(req.user.id)
     .then(friends => res.send(friends))
     .catch(next)
