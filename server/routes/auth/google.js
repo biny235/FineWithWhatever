@@ -1,11 +1,18 @@
 const router = require('express').Router();
 const { User } = require('../../db').models;
-const config = require('../../../config');
-const googleSecret = config.GOOGLE_PLACES_KEY;
+
+try{
+  Object.assign(process.env, config);
+}
+catch(err){
+  console.log("you may be missing config variable")
+}
+
+
 
 //Google AutoComplete routes.
 const googleMapsClient = require('@google/maps').createClient({
-  key: googleSecret,
+  key: process.env.GOOGLE_PLACES_KEY,
   Promise: Promise
 });
 
@@ -21,14 +28,6 @@ router.post('/getplace', (req, res, next) => {
 });
 
 //OAuth middleware for authentication.
-try{
-  Object.assign(process.env, config);
-}
-catch(err){
-  console.log("you may be missing config variable")
-}
-
-
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
