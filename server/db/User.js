@@ -28,6 +28,10 @@ const User = conn.define('user', {
     attributes: { exclude: ['password'] },
   }
 });
+User.prototype.generateToken = function(){
+  const token = jwt.encode({ id: this.id }, KEY);
+  return token
+}
 
 User.authenticate = function (credentials) {
   const { username, password } = credentials;
@@ -42,8 +46,7 @@ User.authenticate = function (credentials) {
       if (!user) {
         throw { status: 401 };
       }
-      const token = jwt.encode({ id: user.id }, KEY);
-      return token;
+      return user.generateToken()
     }
     );
 };
@@ -80,5 +83,20 @@ User.findCurrentPlan = function (id) {
 
   });
 }
+
+User.addFriend = function (user, friendId){
+  let friend
+  return User.findOne({id: friendId})
+    .then(_friend => {
+      friend = _friend
+      friend.addFriend(user)
+    })
+    .then(()=> User.findOne({id: user.id}))
+    .then(user => {
+      user.addFriend(friend)
+      return user.getFriends()
+    })
+}
+
 
 module.exports = User;

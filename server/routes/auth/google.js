@@ -1,8 +1,27 @@
 const router = require('express').Router();
 const { User } = require('../../db').models;
+const config = require('../../../config');
+const googleSecret = config.GOOGLE_PLACES_KEY;
 
+//Google AutoComplete routes.
+const googleMapsClient = require('@google/maps').createClient({
+  key: googleSecret,
+  Promise: Promise
+});
+
+router.post('/autocomplete', (req, res, next) => {
+  googleMapsClient.placesAutoComplete({ input: req.body.input }).asPromise()
+    .then(resp => resp.json.predictions)
+    .then(predictions => res.send(predictions));
+});
+router.post('/getplace', (req, res, next) => {
+  googleMapsClient.reverseGeocode({ place_id: req.body.query }).asPromise()
+    .then(resp => res.send(resp.json.results))
+    .catch(next);
+});
+
+//OAuth middleware for authentication.
 try{
-  const config = require('../../../config');
   Object.assign(process.env, config);
 }
 catch(err){
@@ -18,7 +37,7 @@ router.use(passport.initialize());
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CONSUMER_KEY,
     clientSecret: process.env.GOOGLE_CONSUMER_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: `${process.env.GOOGLE_CALLBACK}/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
     const attr = { googleId: profile.id };
@@ -42,9 +61,12 @@ router.get('/',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }));
 
 router.get('/callback',
-  passport.authenticate('google', { failureRedirect: '/login', session: false}),
+  passport.authenticate('google', { failureRedirect: '/', session: false}),
   function(req, res) {
-    res.redirect('/');
+    const token = req.user.generateToken()
+    res.send(token);
 });
+
+
 
 module.exports = router;
