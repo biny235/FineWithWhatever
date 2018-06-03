@@ -4,8 +4,6 @@ const Place = require('./Place');
 const Plan = require('./Plan');
 const Favorite = require('./Favorite');
 
-
-
 const syncAndSeed = () => {
   return conn.sync({ force: true })
     .then(() => {
@@ -33,11 +31,9 @@ User.belongsToMany(Plan, { through: 'participants' });
 Plan.belongsToMany(User, { through: 'participants' });
 
 /* Recommendations */
-Plan.belongsToMany(Place, { through: 'recommendations' });
-Place.belongsToMany(Plan, { through: 'recommendations' });
-
-// User.belongsToMany(Plan, { through: 'recommendations' });
-// User.belongsToMany(Place, { through: 'recommendations' });
+User.hasMany(Place);
+User.belongsToMany(Plan, { through: 'recommendations' });
+Plan.belongsToMany(User, { through: 'recommendations' });
 
 /* Favorites */
 User.belongsToMany(Place, { through: Favorite });
