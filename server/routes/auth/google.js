@@ -61,9 +61,10 @@ router.get('/',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email'] }));
 
 router.get('/callback',
-  passport.authenticate('google', { failureRedirect: '/login', session: false}),
+  passport.authenticate('google', { failureRedirect: '/', session: false}),
   function(req, res) {
-    res.redirect('/');
+    const token = req.user.generateToken()
+    res.send(token);
 });
 
 

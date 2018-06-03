@@ -28,6 +28,10 @@ const User = conn.define('user', {
     attributes: { exclude: ['password'] },
   }
 });
+User.prototype.generateToken = function(){
+  const token = jwt.encode({ id: this.id }, KEY);
+  return token
+}
 
 User.authenticate = function (credentials) {
   const { username, password } = credentials;
@@ -42,8 +46,7 @@ User.authenticate = function (credentials) {
       if (!user) {
         throw { status: 401 };
       }
-      const token = jwt.encode({ id: user.id }, KEY);
-      return token;
+      return user.generateToken()
     }
     );
 };
