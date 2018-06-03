@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User } = require('../../db').models;
 
 try{
+  const config = require('../../../config')
   Object.assign(process.env, config);
 }
 catch(err){
