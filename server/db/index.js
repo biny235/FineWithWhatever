@@ -4,11 +4,15 @@ const Place = require('./Place');
 const Plan = require('./Plan');
 const Favorite = require('./Favorite');
 
+const sync = () => {
+  return conn.sync({ force: true })
+}
+
 const syncAndSeed = () => {
   return conn.sync({ force: true })
     .then(() => {
       return Promise.all([
-        User.create({username: 'Moe', password: 'MOE'}),
+        User.create({username: 'Moe', password: 'MOE' }),
         User.create({username: 'Larry', password: 'LARRY'}),
         User.create({username: 'Curly', password: 'CURLY'}),
         User.create({username: 'test', password: '123'}),
@@ -20,7 +24,7 @@ const syncAndSeed = () => {
       })
       users.forEach(user =>{
         users[1].addFriend(user);
-      }) 
+      })
     });
 };
 
@@ -44,6 +48,8 @@ User.belongsToMany(Place, { through: Favorite });
 Place.belongsToMany(User, { through: Favorite });
 
 module.exports = {
+  conn,
+  sync,
   syncAndSeed,
   models: {
     User,

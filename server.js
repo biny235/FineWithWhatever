@@ -23,5 +23,3 @@ io.on('connection', (socket)=>{
   socket.emit('setCounter', counter)
 
 })
-
-

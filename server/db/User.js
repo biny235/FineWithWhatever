@@ -20,10 +20,13 @@ const User = conn.define('user', {
   },
   email: {
     type: Sequelize.STRING
+  },
+  thumbnail: {
+    type: Sequelize.STRING
   }
 },
 {
-  defaultScope: 
+  defaultScope:
   {
     attributes: { exclude: ['password'] },
   }
@@ -35,7 +38,7 @@ User.prototype.generateToken = function(){
 
 User.authenticate = function (credentials) {
   const { username, password } = credentials;
-  console.log(username, password)  
+  console.log(username, password)
   return this.findOne({
     where: {
       username: {$iLike: username},
@@ -74,7 +77,7 @@ User.getFriends = function (id) {
 };
 
 User.findCurrentPlan = function (id) {
-  
+
   return conn.models.plan.findOrCreate({
 
     where: { status: {$ne: 'CLOSED'}, userId: id },
