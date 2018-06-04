@@ -64,7 +64,7 @@ router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/', session: false}),
   function(req, res) {
     const token = req.user.generateToken()
-    res.redirect(`/?token=${token}`);
+    res.redirect(`exp://localhost:19000/?token=${token}`);
 });
 
 
