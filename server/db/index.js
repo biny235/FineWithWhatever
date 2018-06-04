@@ -8,26 +8,6 @@ const sync = () => {
   return conn.sync({ force: true })
 }
 
-const syncAndSeed = () => {
-  return conn.sync({ force: true })
-    .then(() => {
-      return Promise.all([
-        User.create({username: 'Moe', password: 'MOE' }),
-        User.create({username: 'Larry', password: 'LARRY'}),
-        User.create({username: 'Curly', password: 'CURLY'}),
-        User.create({username: 'test', password: '123'}),
-      ])
-    })
-    .then(users => {
-      users.forEach(user =>{
-        users[0].addFriend(user);
-      })
-      users.forEach(user =>{
-        users[1].addFriend(user);
-      })
-    });
-};
-
 /* Friends */
 User.belongsToMany(User, { as: 'friends', through: 'friend' });
 
@@ -50,7 +30,6 @@ Place.belongsToMany(User, { through: Favorite });
 module.exports = {
   conn,
   sync,
-  syncAndSeed,
   models: {
     User,
     Favorite,
