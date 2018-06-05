@@ -47,7 +47,7 @@ User.authenticate = function (credentials) {
   })
     .then(user => {
       if (!user) {
-        throw { status: 401 };
+        throw { status: 401, errors: [{ message: "cant find User" }] };
       }
       return user.generateToken()
     }
@@ -62,7 +62,7 @@ User.exchangeTokenForUser = function (token) {
         if (user) {
           return user;
         }
-        throw { status: 401 };
+        throw { status: 401, status: 401, errors: [{ message: "cant find User" }] };
       })
       .catch(() => { throw { status: 401 }; });
   }
