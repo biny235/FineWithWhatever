@@ -83,5 +83,3 @@ conn.sync({ force: true })
     console.error('Error while seeding');
     console.error(err.stack);
   })
-
-module.exports = seed;
