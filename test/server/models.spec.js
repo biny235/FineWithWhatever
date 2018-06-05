@@ -1,5 +1,7 @@
 const expect = require('chai').expect;
 const db = require('../../server/db');
+const { sync } = db;
+const seed = require('../../server/seed.js');
 const { User, Favorite , Plan, Place } = db.models;
 
 // Models tests
@@ -31,12 +33,12 @@ describe('seeded data', () => {
   describe('User data', () => {
     let users;
     beforeEach(() => {
-      return db.syncAndSeed()
+      return seed()
         .then(() => User.findAll()
           .then(_users => users = _users));
     });
     it('we have 5 users in the database.', () => {
-      expect(users.length).to.equal(5);
+      expect(users.length).to.equal(153);
     });
   });
 });

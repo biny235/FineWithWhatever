@@ -32,8 +32,7 @@ const seedSample = () => {
   return Promise.all([
     User.create({ username: 'Moe', password: 'MOE' }),
     User.create({ username: 'Larry', password: 'LARRY' }),
-    User.create({ username: 'Curly', password: 'CURLY' }),
-    User.create({ username: 'test', password: '123' }),
+    User.create({ username: 'Curly', password: 'CURLY' })
   ])
     .then(users => {
       users.forEach(user => {
@@ -59,4 +58,4 @@ conn.sync({ force: true })
     console.error(err.stack);
   })
 
-
+module.exports = seed;
