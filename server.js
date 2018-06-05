@@ -1,14 +1,12 @@
-const { syncAndSeed } = require('./server/db');
+const { sync } = require('./server/db');
 const socketio = require("socket.io")
 const _server = require('http').createServer(require('./server/app'));
 
-
-
 const port = process.env.PORT || 3000;
-
-syncAndSeed()
-
 const server = _server.listen( port, ()=> console.log(`Listening on port ${port}`));
+
+sync();
+
 const io = socketio(server);
 
 let counter = 0

@@ -6,7 +6,8 @@
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "JWT_KEY=fizzbuzz DATABASE_URL=postgres://localhost/fww ./node_modules/mocha/bin/mocha --watch --recursive test/**/*.js",
-    "start:dev": "npm run webpack -- -w & JWT_KEY=fizzbuzz nodemon server.js --ignore dist/ --ignore src/"
+    "start:dev": "npm run webpack -- -w & JWT_KEY=fizzbuzz nodemon server.js --ignore dist/ --ignore src/",
+    "seed": "node ./server/seed"
   },
   "dependencies": {
     "@google/maps": "^0.4.6",
