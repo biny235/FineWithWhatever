@@ -3,6 +3,7 @@ const jwt = require('jwt-simple');
 const KEY = process.env.JWT_KEY;
 const { expect } = require('chai');
 const db = require('../../server/db');
+const seed = require('../../server/seed.js');
 const { User } = db.models;
 
 //Root route
@@ -23,7 +24,7 @@ describe('Loading express', ()=> {
 describe('User routes for Login', () => {
   let userMap;
   beforeEach(() => {
-    return db.syncAndSeed()
+    return seed()
     .then(()=> {
       userMap = User.findAll().reduce((memo, user)=> {
         memo[user.username] = user;
@@ -34,10 +35,10 @@ describe('User routes for Login', () => {
     });
   });
 
-  describe('POST /auth/sessions', ()=> {
+  describe('POST /auth', ()=> {
     it('returns token with correct credentials', ()=> {
       const token = jwt.encode({ id: userMap.moe.id}, KEY);
-      return app.post('/auth/sessions')
+      return app.post('/auth')
         .send({ username: userMap.moe.username, password: userMap.moe.password})
         .expect(200)
         .then( result => {
@@ -45,7 +46,7 @@ describe('User routes for Login', () => {
         });
     });
     it('returns 401 with incorrect credentials', ()=> {
-      return app.post('/auth/sessions')
+      return app.post('/auth')
         .send({ username: userMap.moe.username, password: 'nope'})
         .expect(401)
     });

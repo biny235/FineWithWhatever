@@ -1,7 +1,28 @@
 const { conn } = require('./db');
-const { User } = require('./db').models;
-
+const { User, Plan, Place } = require('./db').models;
 const axios = require('axios');
+
+//Place data
+const places =  [
+{
+  name: 'Killarney Rose',
+  lat: '40.7050604',
+  lng: '-74.00865979999999',
+  place_id: 'ChIJQalvcBZawokRGSuWUh6cZiI'
+},
+{
+  name: 'Fraunces Tavern Museum',
+  lat: '40.7033808',
+  lng: '-74.01135219999999',
+  place_id: 'ChIJn-PPbBRawokRG_eHiyuOIis'
+},
+{
+  name: 'Stone Street Tavern',
+  lat: '40.704215',
+  lng: '-74.01019699999999',
+  place_id: 'ChIJRXAoKBRawokR8U8kqAMMwSU'
+}
+];
 
 const seed = () => {
   axios.get('https://randomuser.me/api/?results=50')
@@ -28,21 +49,25 @@ const seed = () => {
     .catch(err => console.log(err))
 }
 
+//seed plan for Moe with places.
 const seedSample = () => {
+  let _Plan;
   return Promise.all([
     User.create({ username: 'Moe', password: 'MOE' }),
     User.create({ username: 'Larry', password: 'LARRY' }),
     User.create({ username: 'Curly', password: 'CURLY' }),
-    User.create({ username: 'test', password: '123' }),
+    Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
   ])
-    .then(users => {
-      users.forEach(user => {
-        users[0].addFriend(user);
-      })
-      users.forEach(user => {
-        users[1].addFriend(user);
-      })
-    });
+  .then(([user1, user2, user3, plan]) => {
+      _Plan = plan;
+      _Plan.setUser(user1);
+      user1.addFriend(user2);
+      user1.addFriend(user3);
+      return Promise.all(places.map(place => Place.create(place)));
+  })
+  .then(_Places=>{
+    return _Plan.setPlaces(_Places);
+  });
 };
 
 console.log('Syncing database');
@@ -59,4 +84,4 @@ conn.sync({ force: true })
     console.error(err.stack);
   })
 
-
+module.exports = seed;
