@@ -18,7 +18,8 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 router.post('/autocomplete', (req, res, next) => {
-  googleMapsClient.placesAutoComplete({ input: req.body.input }).asPromise()
+  console.log(req.body.input)
+  googleMapsClient.placesAutoComplete({ input: req.body.input, location: [40.59989, -73.744844], radius: 5000  }).asPromise()
     .then(resp => resp.json.predictions)
     .then(predictions => res.send(predictions));
 });
