@@ -12,6 +12,12 @@ const Plan = conn.define('plan', {
   time: {
     type: Sequelize.STRING
   },
+  lat: {
+    type: Sequelize.STRING
+  },
+  lng: {
+    type: Sequelize.STRING
+  },
   status: {
     type: Sequelize.STRING,
     defaultValue: "NEW"

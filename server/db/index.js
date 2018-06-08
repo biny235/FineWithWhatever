@@ -57,6 +57,7 @@ User.belongsToMany(User, { as: 'friends', through: 'friend' });
 
 Plan.belongsTo(User);
 User.hasMany(Plan);
+Plan.hasMany(Place, {as: 'places'});
 
 /* Participants */
 // User.belongsToMany(Plan, { through: 'participants' });
