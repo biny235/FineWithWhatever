@@ -9,25 +9,6 @@ catch(err){
   console.log("you may be missing config variable")
 }
 
-
-
-//Google AutoComplete routes.
-const googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GOOGLE_PLACES_KEY,
-  Promise: Promise
-});
-
-router.post('/autocomplete', (req, res, next) => {
-  googleMapsClient.placesAutoComplete({ input: req.body.input }).asPromise()
-    .then(resp => resp.json.predictions)
-    .then(predictions => res.send(predictions));
-});
-router.post('/getplace', (req, res, next) => {
-  googleMapsClient.reverseGeocode({ place_id: req.body.query }).asPromise()
-    .then(resp => res.send(resp.json.results))
-    .catch(next);
-});
-
 //OAuth middleware for authentication.
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
