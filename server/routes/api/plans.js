@@ -15,6 +15,7 @@ router.post('/:planId/user/:userId/recommend', [auth, checkUser], (req, res, nex
   let place;
   Place.findOrCreatePlace(req.body)
   .then( _place =>{
+    console.log('Place is' + _place.name);
     place = _place;
     return Plan.findById(req.params.planId);
   })
