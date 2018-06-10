@@ -66,7 +66,7 @@ Plan.hasMany(Place, {as: 'places'});
 /* Recommendations */
 Place.belongsToMany(Plan, { through: Recommendation });
 Plan.belongsToMany(Place, { through: Recommendation });
-User.belongsTo(Recommendation);
+Recommendation.belongsTo(User);
 
 /* Favorites */
 User.belongsToMany(Place, { through: Favorite });
