@@ -56,22 +56,22 @@ const seedSample = () => {
     User.create({ username: 'Moe', password: 'MOE' }),
     User.create({ username: 'Larry', password: 'LARRY' }),
     User.create({ username: 'Curly', password: 'CURLY' }),
-    Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
+    //Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
   ])
   .then(([user1, user2, user3, plan]) => {
-      _Plan = plan;
-      _Plan.setUser(user1);
+      //_Plan = plan;
+      //_Plan.setUser(user1);
       user1.addFriend(user2);
       user1.addFriend(user3);
       return Promise.all(places.map(place => Place.create(place)));
   })
   .then(_Places=>{
-    return _Plan.setPlaces(_Places);
+    //return _Plan.setPlaces(_Places);
   });
 };
 
 console.log('Syncing database');
-const main = () => { 
+const main = () => {
   conn.sync({ force: true })
     .then(() => {
       console.log('Seeding database');

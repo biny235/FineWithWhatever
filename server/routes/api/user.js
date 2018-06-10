@@ -49,7 +49,7 @@ router.post('/friends',  (req,res,next)=>{
     .catch(next)
 })
 
-router.get('/plan',  (req, res, next)=>{
+router.get('/plan', auth,  (req, res, next)=>{
   User.findCurrentPlan(req.user.id)
     .spread(plan => res.send(plan))
     .catch(next)

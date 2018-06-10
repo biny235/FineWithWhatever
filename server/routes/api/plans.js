@@ -3,7 +3,6 @@ const { Plan } = require('../../db').models;
 const { auth, checkUser } = require('../authFuncs');
 
 router.get('/',  (req, res, next) => {
-  console.log(req);
   Plan.findAll()
     .then(plans => res.send(plans))
     .catch(next);
