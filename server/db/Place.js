@@ -12,9 +12,9 @@ const Place = conn.define('place', {
   lng: {
     type: Sequelize.STRING
   },
-  url: {
-    type: Sequelize.STRING
-  },
+  // url: {  //BUGGY
+  //   type: Sequelize.STRING
+  // },
   place_id: {
     type: Sequelize.STRING
   },
@@ -24,3 +24,15 @@ const Place = conn.define('place', {
 });
 
 module.exports = Place;
+
+Place.findOrCreatePlace = function(place) {
+  Place.findOrCreate({
+    where: { place_Id: place.place_Id},
+    defaults: {
+      name: place.name,
+      lat: place.lat,
+      lng: place.lng,
+      place_id: place.place_id
+    }
+  });
+};
