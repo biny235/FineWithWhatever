@@ -77,14 +77,13 @@ User.getFriends = function (id) {
 };
 
 User.findCurrentPlan = function (id) {
-
   return conn.models.plan.findOrCreate({
 
     where: { status: {$ne: 'CLOSED'}, userId: id },
     defaults: { status: 'NEW', userId: id },
     include: [{ all: true }]
 
-  });
+  })
 }
 
 User.addFriend = function (user, friendId){
