@@ -1,8 +1,9 @@
-import React from 'react';
-import {render} from 'react-dom';
+import io from 'socket.io-client';
+const socket = io(window.location.origin);
 
-import Main from './Main'
+const id = Math.random() * 10
 
-const app = document.getElementById('app');
+socket.on('connect', () => {
+  socket.emit('userId', id)
+});
 
-render(<Main />, app)
