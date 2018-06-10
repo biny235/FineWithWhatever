@@ -12,6 +12,9 @@ const Place = conn.define('place', {
   lng: {
     type: Sequelize.STRING
   },
+  url: {
+    type: Sequelize.STRING
+  },
   place_id: {
     type: Sequelize.STRING
   },
