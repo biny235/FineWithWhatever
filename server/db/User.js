@@ -84,7 +84,7 @@ User.findCurrentPlan = function (id) {
     defaults: { status: 'NEW', userId: id },
     include: [{ all: true }]
 
-  });
+  })
 }
 
 User.addFriend = function (user, friendId){

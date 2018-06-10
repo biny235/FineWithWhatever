@@ -51,7 +51,7 @@ router.post('/friends', [auth, checkUser], (req,res,next)=>{
 
 router.get('/plan', [auth, checkUser], (req, res, next)=>{
   User.findCurrentPlan(req.user.id)
-    .then(plan => res.send(plan))
+    .spread(plan => res.send(plan))
     .catch(next)
 })
 
