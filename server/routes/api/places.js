@@ -8,6 +8,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+  console.log(`Posting: ${req.body.name}`);
   Place.create(req.body)
     .then(place => res.send(place))
     .catch(next);
