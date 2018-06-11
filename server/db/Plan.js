@@ -4,7 +4,7 @@ const { Sequelize } = conn;
 const Plan = conn.define('plan', {
   name: {
     type: Sequelize.STRING,
-    defaultValue: 'My Plan'
+    defaultValue: "Plan"
   },
   date: {
     type: Sequelize.STRING
