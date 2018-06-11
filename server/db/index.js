@@ -32,6 +32,7 @@ module.exports = {
     User,
     Favorite,
     Plan,
-    Place
+    Place,
+    Recommendation
   }
 };

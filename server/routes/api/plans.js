@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Plan, Place, User } = require('../../db').models;
+const { Plan, Place, Recommendation } = require('../../db').models;
 const { auth, checkUser } = require('../authFuncs');
 
 router.put('/:id', [auth, checkUser], (req, res, next) => {
@@ -16,20 +16,18 @@ router.post('/:planId/user/:userId/recommend', [auth, checkUser], (req, res, nex
   Place.findOrCreatePlace(req.body)
   .then(() => {
    return Place.findOne({where: {place_id: req.body.place_id}})
-    .then(_place => {
+     .then(_place => {
       place = _place;
     });
   })
   .then(()=>{
-    return Plan.findById(req.params.planId*1);
+    return Recommendation.create({
+      userId: req.params.userId,
+      planId: req.params.planId*1,
+      placeId: place.id});
   })
-  .then( plan => {
-   return plan.addPlace(place); //theres no addRecommendation function
-  })
-  .then(recommendation =>{
-    console.log(recommendation);
-    return User.findById(req.params.userId)
-    .then(user => recommendation.setUser(user));
+  .then(rec=> {
+    return rec;
   })
   .then(rec => res.send(rec))
   .catch(next);
