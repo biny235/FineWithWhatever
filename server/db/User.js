@@ -22,7 +22,8 @@ const User = conn.define('user', {
     type: Sequelize.STRING
   },
   thumbnail: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'https://commons.wikimedia.org/wiki/Category:Blank_persons_placeholders#/media/File:Elliot_Grieveson.png'
   }
 },
 {
