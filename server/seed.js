@@ -60,6 +60,7 @@ const seedSample = () => {
   ])
   .then(([user1, user2, user3, plan]) => {
       _Plan = plan;
+      console.log('KEYS on PLAN MODEL' + Object.keys(Plan.prototype));
       _Plan.setUser(user1);
       user1.addFriend(user2);
       user1.addFriend(user3);
@@ -71,7 +72,7 @@ const seedSample = () => {
 };
 
 console.log('Syncing database');
-const main = () => { 
+const main = () => {
   conn.sync({ force: true })
     .then(() => {
       console.log('Seeding database');
