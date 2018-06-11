@@ -56,6 +56,12 @@ router.get('/plan', auth,  (req, res, next)=>{
     .catch(next)
 })
 
+router.get('/:id', auth,  (req, res, next)=>{
+  User.findById(req.params.id)
+    .then(user => res.send(user))
+    .catch(next)
+})
+
 router.get('/:id/plan', auth,  (req, res, next)=>{
   console.log(req.params.id)
   User.findCurrentPlan(req.params.id)
