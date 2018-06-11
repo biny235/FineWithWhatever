@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Plan, Place } = require('../../db').models;
+const { Plan, Place, User } = require('../../db').models;
 const { auth, checkUser } = require('../authFuncs');
 
 router.put('/:id', [auth, checkUser], (req, res, next) => {
@@ -14,19 +14,27 @@ router.put('/:id', [auth, checkUser], (req, res, next) => {
 router.post('/:planId/user/:userId/recommend', [auth, checkUser], (req, res, next) => {
   let place;
   Place.findOrCreatePlace(req.body)
-  .then( _place =>{
-    console.log('Place is' + _place.name);
-    place = _place;
-    return Plan.findById(req.params.planId);
+  .then(() => {
+   return Place.findOne({where: {place_id: req.body.place_id}})
+    .then(_place => {
+      place = _place;
+    });
+  })
+  .then(()=>{
+    return Plan.findById(req.params.planId*1);
   })
   .then( plan => {
-    const userId = req.params.userId;
-    const placeId = place.id;
-    plan.addRecommendation(userId, placeId);
-    res.send(plan);
+   return plan.addPlace(place); //theres no addRecommendation function
   })
+  .then(recommendation =>{
+    console.log(recommendation);
+    return User.findById(req.params.userId)
+    .then(user => recommendation.setUser(user));
+  })
+  .then(rec => res.send(rec))
   .catch(next);
 });
+
 
 router.delete('/:id', [auth, checkUser], (req, res, next) => {
   Plan.findById(req.params.id)
