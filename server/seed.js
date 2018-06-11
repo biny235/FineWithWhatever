@@ -49,7 +49,7 @@ const seed = () => {
     .catch(err => console.log(err))
 }
 
-//seed plan for Moe with places.
+
 const seedSample = () => {
   let _Plan;
   return Promise.all([
@@ -60,7 +60,6 @@ const seedSample = () => {
   ])
   .then(([user1, user2, user3, plan]) => {
       _Plan = plan;
-      console.log('KEYS on PLAN MODEL' + Object.keys(Plan.prototype));
       _Plan.setUser(user1);
       user1.addFriend(user2);
       user1.addFriend(user3);
@@ -83,7 +82,7 @@ const main = () => {
     .catch(err => {
       console.error('Error while seeding');
       console.error(err.stack);
-    })
-  }
+    });
+  };
 
   module.exports = main;

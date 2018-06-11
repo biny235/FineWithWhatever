@@ -4,12 +4,10 @@ const Place = require('./Place');
 const Plan = require('./Plan');
 const Favorite = require('./Favorite');
 const Recommendation = require('./Recommendation');
-const axios = require('axios');
 
 const sync = () => {
   return conn.sync({ force: true })
 }
-
 
 
 /* Friends */
