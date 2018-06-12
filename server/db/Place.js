@@ -12,9 +12,9 @@ const Place = conn.define('place', {
   lng: {
     type: Sequelize.FLOAT
   },
-  url: {
-    type: Sequelize.STRING
-  },
+  // url: {  //BUGGY
+  //   type: Sequelize.STRING
+  // },
   place_id: {
     type: Sequelize.INTEGER
   },
@@ -24,3 +24,15 @@ const Place = conn.define('place', {
 });
 
 module.exports = Place;
+
+Place.findOrCreatePlace = function(place) {
+  return Place.findOrCreate({
+    where: { place_id: place.place_id},
+    defaults: {
+      name: place.name,
+      lat: place.geometry.location.lat,
+      lng: place.geometry.location.lng,
+      place_id: place.place_id
+    }
+  });
+};

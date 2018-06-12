@@ -22,7 +22,8 @@ const User = conn.define('user', {
     type: Sequelize.STRING
   },
   thumbnail: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'https://commons.wikimedia.org/wiki/Category:Blank_persons_placeholders#/media/File:Elliot_Grieveson.png'
   }
 },
 {
@@ -57,7 +58,7 @@ User.authenticate = function (credentials) {
 User.exchangeTokenForUser = function (token) {
   try {
     const id = jwt.decode(token, KEY).id;
-    return User.findById(id, {attributes: ['id','username', 'email']})
+    return User.findById(id, {attributes: ['id','username', 'email'], include: [{ all: true }]})
       .then(user => {
         if (user) {
           return user;

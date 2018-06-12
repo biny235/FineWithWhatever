@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Plan } = require('../../db').models;
+const { Plan, Place, Recommendation } = require('../../db').models;
 const { auth, checkUser } = require('../authFuncs');
 
 router.get('/',  (req, res, next) => {
@@ -23,8 +23,30 @@ router.put('/:id',  (req, res, next) => {
     .catch(next);
 });
 
+router.post('/:planId/user/:userId/recommend', [auth, checkUser], (req, res, next) => {
+  let place;
+  Place.findOrCreatePlace(req.body)
+  .then(() => {
+   return Place.findOne({where: {place_id: req.body.place_id}})
+     .then(_place => {
+      place = _place;
+    });
+  })
+  .then(()=>{
+    return Recommendation.create({
+      userId: req.params.userId,
+      planId: req.params.planId*1,
+      placeId: place.id});
+  })
+  .then(rec=> {
+    return rec;
+  })
+  .then(rec => res.send(rec))
+  .catch(next);
+});
 
-router.delete('/:id',  (req, res, next) => {
+
+router.delete('/:id', [auth, checkUser], (req, res, next) => {
   Plan.findById(req.params.id)
     .then(plan => {
       plan.destroy();

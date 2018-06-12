@@ -49,14 +49,14 @@ const seed = () => {
     .catch(err => console.log(err))
 }
 
-//seed plan for Moe with places.
+
 const seedSample = () => {
   let _Plan;
   return Promise.all([
-    User.create({ username: 'Moe', password: 'MOE' }),
-    User.create({ username: 'Larry', password: 'LARRY' }),
-    User.create({ username: 'Curly', password: 'CURLY' }),
-    //Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
+    User.create({ username: 'Moe', password: 'MOE', thumbnail: "https://pbs.twimg.com/media/CgdepNwW4AEXMm0.jpg" }),
+    User.create({ username: 'Larry', password: 'LARRY', thumbnail: "https://i.imgur.com/w2G8btY.jpg" }),
+    User.create({ username: 'Curly', password: 'CURLY', thumbnail: "https://www.neatorama.com/images/posts/20/71/71020/1397100109-0.jpg" }),
+    Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
   ])
   .then(([user1, user2, user3, plan]) => {
       //_Plan = plan;
@@ -82,7 +82,7 @@ const main = () => {
     .catch(err => {
       console.error('Error while seeding');
       console.error(err.stack);
-    })
-  }
+    });
+  };
 
   module.exports = main;
