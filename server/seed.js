@@ -49,7 +49,7 @@ const seed = () => {
     .catch(err => console.log(err))
 }
 
-//seed plan for Moe with places.
+
 const seedSample = () => {
   let _Plan;
   return Promise.all([
@@ -71,7 +71,7 @@ const seedSample = () => {
 };
 
 console.log('Syncing database');
-const main = () => { 
+const main = () => {
   conn.sync({ force: true })
     .then(() => {
       console.log('Seeding database');
@@ -82,7 +82,7 @@ const main = () => {
     .catch(err => {
       console.error('Error while seeding');
       console.error(err.stack);
-    })
-  }
+    });
+  };
 
   module.exports = main;
