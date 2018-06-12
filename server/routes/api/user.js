@@ -45,10 +45,19 @@ router.get('/friends', auth, (req, res, next)=>{
 })
 
 router.post('/friends', auth, (req,res,next)=>{
-  User.addFriend(req.user, req.body.friendId)
-    .then(friends => res.send(friends))
+  let friend
+  User.find({ where: { email: { $iLike: req.body.email } }})
+    .then(_friend => {
+      if(!_friend){
+        return res.sendStatus(500)
+      }
+      friend = _friend
+      _friend.addFriend(req.user)
+    })
+    .then(() => res.send(friend))
     .catch(next)
 })
+  
 
 router.get('/plan', auth,  (req, res, next)=>{
   User.findCurrentPlan(req.user.id)
@@ -63,7 +72,6 @@ router.get('/:id', auth,  (req, res, next)=>{
 })
 
 router.get('/:id/plan', auth,  (req, res, next)=>{
-  console.log(req.params.id)
   User.findCurrentPlan(req.params.id)
     .spread(plan => res.send(plan))
     .catch(next)
