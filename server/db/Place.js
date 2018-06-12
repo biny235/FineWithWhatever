@@ -16,7 +16,7 @@ const Place = conn.define('place', {
   //   type: Sequelize.STRING
   // },
   place_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   details: {
     type: Sequelize.TEXT
