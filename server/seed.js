@@ -53,9 +53,9 @@ const seed = () => {
 const seedSample = () => {
   let _Plan;
   return Promise.all([
-    User.create({ username: 'Moe', password: 'MOE', thumbnail: "https://pbs.twimg.com/media/CgdepNwW4AEXMm0.jpg" }),
-    User.create({ username: 'Larry', password: 'LARRY', thumbnail: "https://i.imgur.com/w2G8btY.jpg" }),
-    User.create({ username: 'Curly', password: 'CURLY', thumbnail: "https://www.neatorama.com/images/posts/20/71/71020/1397100109-0.jpg" }),
+    User.create({ username: 'Moe', password: 'MOE', email:'moe@3.com', thumbnail: "https://pbs.twimg.com/media/CgdepNwW4AEXMm0.jpg" }),
+    User.create({ username: 'Larry', password: 'LARRY', email:'larry@3.com', thumbnail: "https://i.imgur.com/w2G8btY.jpg" }),
+    User.create({ username: 'Curly', password: 'CURLY', email:'curly@3.com', thumbnail: "https://www.neatorama.com/images/posts/20/71/71020/1397100109-0.jpg" }),
     Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
   ])
   .then(([user1, user2, user3, plan]) => {
