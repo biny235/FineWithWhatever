@@ -4,12 +4,10 @@ const Place = require('./Place');
 const Plan = require('./Plan');
 const Favorite = require('./Favorite');
 const Recommendation = require('./Recommendation');
-const axios = require('axios');
 
 const sync = () => {
   return conn.sync({ force: true })
 }
-
 
 
 /* Friends */
@@ -17,11 +15,7 @@ User.belongsToMany(User, { as: 'friends', through: 'friend' });
 
 Plan.belongsTo(User);
 User.hasMany(Plan);
-Plan.hasMany(Place, {as: 'places'});
 
-/* Participants */
-// User.belongsToMany(Plan, { through: 'participants' });
-// Plan.belongsToMany(User, { through: 'participants' });
 
 /* Recommendations */
 Place.belongsToMany(Plan, { through: Recommendation });
@@ -38,6 +32,7 @@ module.exports = {
     User,
     Favorite,
     Plan,
-    Place
+    Place,
+    Recommendation
   }
 };
