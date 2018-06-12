@@ -89,7 +89,8 @@ User.findCurrentPlan = function (id) {
 }
 
 User.addFriend = function (user, friend){
-  return user.addFriend(friend)
+  return friend.addFriend(user)
+    .then(()=>user.addFriend(friend))
     .then(() => user.getFriends())
 
 }
