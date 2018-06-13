@@ -1,5 +1,5 @@
 const { conn } = require('./db');
-const { User, Plan, Place } = require('./db').models;
+const { User, Plan, Place, Recommendation } = require('./db').models;
 const axios = require('axios');
 
 //Place data
@@ -51,22 +51,37 @@ const seed = () => {
 
 
 const seedSample = () => {
-  let _Plan;
+  let plan, moe, larry, curly;
   return Promise.all([
     User.create({ username: 'Moe', password: 'MOE', email:'moe@3.com', thumbnail: "https://pbs.twimg.com/media/CgdepNwW4AEXMm0.jpg" }),
     User.create({ username: 'Larry', password: 'LARRY', email:'larry@3.com', thumbnail: "https://i.imgur.com/w2G8btY.jpg" }),
     User.create({ username: 'Curly', password: 'CURLY', email:'curly@3.com', thumbnail: "https://www.neatorama.com/images/posts/20/71/71020/1397100109-0.jpg" }),
     Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
   ])
-  .then(([user1, user2, user3, plan]) => {
-      _Plan = plan;
-      _Plan.setUser(user1);
-      user1.addFriend(user2);
-      user1.addFriend(user3);
-      return Promise.all(places.map(place => Place.create(place)));
+  .then(([_moe, _larry, _curly, _plan]) => {
+    moe = _moe;
+    larry = _larry;
+    curly = _curly;
+    plan = _plan;
+    plan.setUser(_moe);
+    _moe.addFriend(_larry);
+    _moe.addFriend(_curly);
+    return Promise.all(places.map(place => Place.create(place)));
   })
-  .then(_Places=>{
-    return _Plan.setPlaces(_Places);
+  .then(_places => {
+    return Promise.all(_places.map(place => plan.addPlace(place)));
+  })
+  .then(() => {
+    return Recommendation.findAll({
+      where: {
+        planId: plan.id
+      }
+    });
+  })
+  .then(([reco1, reco2, reco3]) => {
+    reco1.setUser(larry);
+    reco2.setUser(larry);
+    reco3.setUser(larry);
   });
 };
 
