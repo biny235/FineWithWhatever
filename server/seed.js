@@ -3,25 +3,25 @@ const { User, Plan, Place, Recommendation } = require('./db').models;
 const axios = require('axios');
 
 //Place data
-const places =  [
-{
-  name: 'Killarney Rose',
-  lat: '40.7050604',
-  lng: '-74.00865979999999',
-  place_id: 'ChIJQalvcBZawokRGSuWUh6cZiI'
-},
-{
-  name: 'Fraunces Tavern Museum',
-  lat: '40.7033808',
-  lng: '-74.01135219999999',
-  place_id: 'ChIJn-PPbBRawokRG_eHiyuOIis'
-},
-{
-  name: 'Stone Street Tavern',
-  lat: '40.704215',
-  lng: '-74.01019699999999',
-  place_id: 'ChIJRXAoKBRawokR8U8kqAMMwSU'
-}
+const places = [
+  {
+    name: 'Killarney Rose',
+    lat: '40.7050604',
+    lng: '-74.00865979999999',
+    place_id: 'ChIJQalvcBZawokRGSuWUh6cZiI'
+  },
+  {
+    name: 'Fraunces Tavern Museum',
+    lat: '40.7033808',
+    lng: '-74.01135219999999',
+    place_id: 'ChIJn-PPbBRawokRG_eHiyuOIis'
+  },
+  {
+    name: 'Stone Street Tavern',
+    lat: '40.704215',
+    lng: '-74.01019699999999',
+    place_id: 'ChIJRXAoKBRawokR8U8kqAMMwSU'
+  }
 ];
 
 const seed = () => {
@@ -41,8 +41,8 @@ const seed = () => {
     .then(users => {
       for (let i = 0; i < 50; i++) {
         users.forEach(user => {
-          if(users[i].email !== user.email)
-          users[i].addFriend(user);
+          if (users[i].email !== user.email)
+            users[i].addFriend(user);
         })
       }
     })
@@ -56,7 +56,7 @@ const seedSample = () => {
     User.create({ username: 'Moe', password: 'MOE', email:'moe@3.com', thumbnail: "https://pbs.twimg.com/media/CgdepNwW4AEXMm0.jpg" }),
     User.create({ username: 'Larry', password: 'LARRY', email:'larry@3.com', thumbnail: "https://i.imgur.com/w2G8btY.jpg" }),
     User.create({ username: 'Curly', password: 'CURLY', email:'curly@3.com', thumbnail: "https://www.neatorama.com/images/posts/20/71/71020/1397100109-0.jpg" }),
-    Plan.create({ name: 'Test Plan', lat:'40.7050758', lng:'-74.00916039999998'})
+    Plan.create({ name: 'Test Plan', date: '2018-06-23', time: '11:40', category: 'Restaurants' })
   ])
   .then(([_moe, _larry, _curly, _plan]) => {
     moe = _moe;
@@ -98,6 +98,6 @@ const main = () => {
       console.error('Error while seeding');
       console.error(err.stack);
     });
-  };
+};
 
-  module.exports = main;
+module.exports = main;

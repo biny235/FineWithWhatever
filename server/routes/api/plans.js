@@ -2,7 +2,19 @@ const router = require('express').Router();
 const { Plan, Place, Recommendation } = require('../../db').models;
 const { auth, checkUser } = require('../authFuncs');
 
-router.put('/:id', [auth, checkUser], (req, res, next) => {
+router.get('/',  (req, res, next) => {
+  Plan.findAll()
+    .then(plans => res.send(plans))
+    .catch(next);
+});
+
+router.post('/',  (req, res, next) => {
+  Plan.create(req.body)
+    .then(plan => res.send(plan))
+    .catch(next);
+});
+
+router.put('/:id',  (req, res, next) => {
   Plan.findById(req.params.id)
     .then(plan => {
       plan.update(req.body);
