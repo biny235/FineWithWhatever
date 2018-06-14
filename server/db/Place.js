@@ -7,10 +7,10 @@ const Place = conn.define('place', {
     allowNull: false
   },
   lat: {
-    type: Sequelize.STRING
+    type: Sequelize.FLOAT
   },
   lng: {
-    type: Sequelize.STRING
+    type: Sequelize.FLOAT
   },
   // url: {  //BUGGY
   //   type: Sequelize.STRING
