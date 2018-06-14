@@ -39,25 +39,15 @@ router.delete('/', auth, (req, res, next) => {
 
 router.get('/friends', auth, (req, res, next)=>{
   User.getFriends(req.user.id)
-    .then(friends => {
-      res.send(friends)})
+    .then(friends => res.send(friends))
     .catch(next)
 })
 
 router.post('/friends', auth, (req,res,next)=>{
-  let friend
-  User.find({ where: { email: { $iLike: req.body.email } }})
-    .then(_friend => {
-      if(!_friend){
-        return res.sendStatus(500)
-      }
-      friend = _friend
-      _friend.addFriend(req.user)
-    })
-    .then(() => res.send(friend))
+  User.addFriend(req.user, req.body.friendId)
+    .then(friends => res.send(friends))
     .catch(next)
 })
-  
 
 router.get('/plan', auth,  (req, res, next)=>{
   User.findCurrentPlan(req.user.id)
