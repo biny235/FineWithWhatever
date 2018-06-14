@@ -13,9 +13,12 @@ const Plan = conn.define('plan', {
     type: Sequelize.STRING
   },
   lat: {
-    type: Sequelize.STRING
+    type: Sequelize.FLOAT
   },
   lng: {
+    type: Sequelize.FLOAT
+  },
+  city: {
     type: Sequelize.STRING
   },
   status: {
