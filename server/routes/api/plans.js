@@ -27,7 +27,7 @@ router.post('/:planId/user/:userId/recommend', auth, (req, res, next) => {
   let place;
   Place.findOrCreatePlace(req.body)
   .then(() => {
-   return Place.findOne({where: {place_id: req.body.place_id}})
+   return Place.findOne({where: { place_id: req.body.place_id }})
      .then(_place => {
       place = _place;
     });
@@ -38,10 +38,9 @@ router.post('/:planId/user/:userId/recommend', auth, (req, res, next) => {
       planId: req.params.planId*1,
       placeId: place.id});
   })
-  .then(rec=> {
-    return rec;
+  .then(rec => {
+    res.send(Object.assign({}, rec, place))
   })
-  .then(rec => res.send(rec))
   .catch(next);
 });
 
