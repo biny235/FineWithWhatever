@@ -44,8 +44,6 @@ router.post('/:planId/user/:userId/recommend', auth, (req, res, next) => {
   .catch(next);
 });
 
-router.get('/:planId/user/:userId/recommend')
-
 
 router.delete('/:id', [auth, checkUser], (req, res, next) => {
   Plan.findById(req.params.id)
