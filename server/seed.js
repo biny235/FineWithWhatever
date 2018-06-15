@@ -65,7 +65,9 @@ const seedSample = () => {
     plan = _plan;
     plan.setUser(_moe);
     _moe.addFriend(_larry);
+    _larry.addFriend(_moe);
     _moe.addFriend(_curly);
+    _curly.addFriend(_moe);
     return Promise.all(places.map(place => Place.create(place)));
   })
   .then(_places => {
