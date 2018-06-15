@@ -23,7 +23,7 @@ router.put('/:id',  (req, res, next) => {
     .catch(next);
 });
 
-router.post('/:planId/user/:userId/recommend', [auth, checkUser], (req, res, next) => {
+router.post('/:planId/user/:userId/recommend', auth, (req, res, next) => {
   let place;
   Place.findOrCreatePlace(req.body)
   .then(() => {
@@ -44,6 +44,8 @@ router.post('/:planId/user/:userId/recommend', [auth, checkUser], (req, res, nex
   .then(rec => res.send(rec))
   .catch(next);
 });
+
+router.get('/:planId/user/:userId/recommend')
 
 
 router.delete('/:id', [auth, checkUser], (req, res, next) => {
